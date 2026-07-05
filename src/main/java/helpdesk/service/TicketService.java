@@ -1,5 +1,6 @@
 package helpdesk.service;
 
+import helpdesk.model.Comment;
 import helpdesk.model.Ticket;
 import helpdesk.model.TicketStatus;
 import helpdesk.model.User;
@@ -14,4 +15,9 @@ public interface TicketService {
     Ticket findById(long id);
 
     public Ticket changeStatus(long id, TicketStatus status);
+
+    public Comment addComment(long ticketId,
+                              String text,
+                              User author);
+    public List<Comment> getComments(long ticketId);
 }

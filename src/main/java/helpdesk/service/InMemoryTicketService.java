@@ -1,9 +1,11 @@
 package helpdesk.service;
 
+import helpdesk.model.Comment;
 import helpdesk.model.Ticket;
 import helpdesk.model.TicketStatus;
 import helpdesk.model.User;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class InMemoryTicketService
@@ -11,6 +13,7 @@ public class InMemoryTicketService
 
     private List<Ticket> tickets = new ArrayList<>();
     private long nextId = 1;
+    private long nextCommentId = 0;
 
     @Override
     public Ticket createTicket(String title, String description, User author) {
@@ -45,4 +48,23 @@ public class InMemoryTicketService
         foundTicket.setStatus(status);
         return foundTicket;
     }
+    public Comment addComment(long ticketId,
+                              String text,
+                              User author){
+        Ticket foundTicket = findById(ticketId);
+        if (foundTicket == null) {
+            return null;
+        }
+        Comment comment = new Comment(nextCommentId++, text, author, LocalDateTime.now());
+        foundTicket.addComment(comment);
+        return comment;
+
+    }
+    public List<Comment> getComments(long ticketId){
+        Ticket foundTicket = findById(ticketId);
+        if (foundTicket == null) {
+            return Collections.emptyList();
+        }
+        return foundTicket.getComments();
+    };
 }

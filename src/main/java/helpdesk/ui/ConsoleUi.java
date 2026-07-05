@@ -1,4 +1,5 @@
 package helpdesk.ui;
+import helpdesk.model.Comment;
 import helpdesk.model.Ticket;
 import helpdesk.model.TicketStatus;
 import helpdesk.model.User;
@@ -24,7 +25,8 @@ public class ConsoleUi {
         while (workingCycle){
             System.out.println("введите число: 0 - выйти, 1 - создать заявку, 2 - посмотреть все заявки," +
                     " 3 - найти заявки по id, 4 - изменить статус заявки, 5 - создать пользователя" +
-                    " 6 - выбрать пользователя, 7 - посмотреть пользователей ");
+                    " 6 - выбрать пользователя, 7 - посмотреть пользователей, 8 - написать комментарий к заявке" +
+                    " 9 - посмотреть все комментарии к заявке");
             int num = scanner.nextInt();
             scanner.nextLine();
 
@@ -52,6 +54,12 @@ public class ConsoleUi {
                     break;
                 case 7:
                     showAllUsers();
+                    break;
+                case 8:
+                    createComment();
+                    break;
+                case 9:
+                    showTicketComments();
                     break;
                 default:
                     System.out.println("вы ввели не то!");
@@ -132,5 +140,25 @@ public class ConsoleUi {
         System.out.println("Пользователь выбран");
     }
 
+    private void createComment(){
+        System.out.println("введите номер заявки");
+        long idComment = scanner.nextLong();
+        scanner.nextLine();
+        System.out.println("введите комментарий");
+        String comment = scanner.nextLine();
+        ticketService.addComment(idComment, comment, currentUser);
+    }
+    private void showTicketComments(){
+        System.out.println("введите номер заявки для просмотра ее комментариев");
+        long idComment = scanner.nextLong();
+        List<Comment> comments = ticketService.getComments(idComment);
+        if (comments.isEmpty()) {
+            System.out.println("Комментарии отсутствуют");
+            return;
+        }
+        for (Comment comment : comments) {
+            System.out.println(comment);
+        }
+    }
 
 }

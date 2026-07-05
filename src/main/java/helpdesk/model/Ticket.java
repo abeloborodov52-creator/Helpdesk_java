@@ -1,12 +1,16 @@
 package helpdesk.model;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Ticket {
     private Long id;
     private String title;
     private String description;
     private TicketStatus status;
     private User author;
+    private List<Comment> comments;
 
     public Ticket(Long id, String title, String description, TicketStatus status, User author) {
         this.id = id;
@@ -14,6 +18,7 @@ public class Ticket {
         this.description = description;
         this.status = status;
         this.author = author;
+        comments = new ArrayList<>();
     }
 
     @Override
@@ -59,5 +64,15 @@ public class Ticket {
         this.status = status;
     }
 
+    public List<Comment> getComments() {
+        return comments;
+    }
 
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+    public void addComment(Comment comment) {
+
+        comments.add(comment);
+    }
 }
