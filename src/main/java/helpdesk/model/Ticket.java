@@ -10,6 +10,7 @@ public class Ticket {
     private String description;
     private TicketStatus status;
     private User author;
+    private User assignee;
     private List<Comment> comments;
 
     public Ticket(Long id, String title, String description, TicketStatus status, User author) {
@@ -29,6 +30,7 @@ public class Ticket {
                 ", description='" + description + '\'' +
                 ", status=" + status + '\'' +
                 ", author=" + author +
+                ", assignee=" + assignee +
                 '}';
     }
 
@@ -74,5 +76,21 @@ public class Ticket {
     public void addComment(Comment comment) {
 
         comments.add(comment);
+    }
+
+    public User getAssignee() {
+        return assignee;
+    }
+
+    public void setAssignee(User assignee) {
+        this.assignee = assignee;
+    }
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
     }
 }

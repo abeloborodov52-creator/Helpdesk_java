@@ -1,5 +1,6 @@
 package helpdesk.service;
 
+import helpdesk.model.Ticket;
 import helpdesk.model.User;
 
 import java.util.ArrayList;
@@ -33,6 +34,10 @@ public class InMemoryUserService
         }
         return null;
     }
+
+
+
+
 
 
 }

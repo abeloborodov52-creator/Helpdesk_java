@@ -23,10 +23,11 @@ public class ConsoleUi {
         currentUser = userService.createUser("Александр");
         boolean workingCycle = true;
         while (workingCycle){
-            System.out.println("введите число: 0 - выйти, 1 - создать заявку, 2 - посмотреть все заявки," +
-                    " 3 - найти заявки по id, 4 - изменить статус заявки, 5 - создать пользователя" +
-                    " 6 - выбрать пользователя, 7 - посмотреть пользователей, 8 - написать комментарий к заявке" +
-                    " 9 - посмотреть все комментарии к заявке");
+            System.out.println("введите число: 0 - выйти, 1 - создать заявку, 2 - посмотреть все заявки,\n" +
+                    " 3 - найти заявки по id, 4 - изменить статус заявки,\n 5 - создать пользователя" +
+                    " 6 - выбрать пользователя,\n 7 - посмотреть пользователей, 8 - написать комментарий к заявке\n" +
+                    " 9 - посмотреть все комментарии к заявке, 10 - назначить ответственного,\n 11 - снять ответственного" +
+                    " 12 - показать заявки конкретного человека");
             int num = scanner.nextInt();
             scanner.nextLine();
 
@@ -60,6 +61,15 @@ public class ConsoleUi {
                     break;
                 case 9:
                     showTicketComments();
+                    break;
+                case 10:
+                    assigneeOnTicket();
+                    break;
+                case 11:
+                    removeAssigne();
+                    break;
+               case 12:
+                    showTicketsOfPerson();
                     break;
                 default:
                     System.out.println("вы ввели не то!");
@@ -160,5 +170,55 @@ public class ConsoleUi {
             System.out.println(comment);
         }
     }
+
+    private void assigneeOnTicket(){
+        System.out.println("введите номер заявки");
+        long idticket = scanner.nextLong();
+        scanner.nextLine();
+        System.out.println("введите номер ответственного за заявку");
+        long userId = scanner.nextLong();
+        User user = userService.findUserById(userId);
+        if (user == null) {
+            System.out.println("Пользователь не найден");
+            return;
+        }
+        ticketService.setAssignee(idticket, user);
+    }
+    private void removeAssigne(){
+        System.out.println("введите номер заявки");
+        long idticket = scanner.nextLong();
+        scanner.nextLine();
+        System.out.println(ticketService.findById(idticket));
+        System.out.println("подтвердите снятие - 1 да, 2 - нет");
+        long removing = scanner.nextLong();
+        boolean removed = false;
+        if (removing == 1) {
+            removed = ticketService.removeAssignee(idticket);
+        }
+        if (removed) {
+            System.out.println("пользователь снят");
+        } else {
+            System.out.println("заявка не найдена");
+        }
+
+
+    }
+    private void showTicketsOfPerson() {
+        showAllUsers();
+
+        System.out.println("Введите id пользователя");
+
+        long id = scanner.nextLong();
+
+        List<Ticket> ticketsBufer =
+                ticketService.findTicketsByPerson(id);
+
+        for (Ticket ticket : ticketsBufer) {
+            System.out.println(ticket);
+        }
+    }
+
+
+
 
 }

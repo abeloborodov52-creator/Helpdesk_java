@@ -48,6 +48,7 @@ public class InMemoryTicketService
         foundTicket.setStatus(status);
         return foundTicket;
     }
+
     public Comment addComment(long ticketId,
                               String text,
                               User author){
@@ -67,4 +68,27 @@ public class InMemoryTicketService
         }
         return foundTicket.getComments();
     };
+
+    public List<Ticket> findTicketsByPerson(long userId) {
+        List<Ticket> result = new ArrayList<>();
+        for (Ticket ticket : tickets) {
+            if (ticket.getAuthor() == null) {
+                return null;
+            }
+            if (ticket.getAuthor().getId() == userId) {
+                result.add(ticket);
+            }
+        }
+        return result;
+    }
+    public void setAssignee(long ticketId, User user) {
+        findById(ticketId).setAssignee(user);
+    }
+    public boolean removeAssignee(long ticketId) {
+        findById(ticketId).setAssignee(null);
+        return true;
+    }
+
+
+
 }
