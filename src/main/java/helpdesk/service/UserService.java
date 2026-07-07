@@ -8,11 +8,10 @@ public interface UserService {
 
     User createUser(String username);
 
-    List<User> getAllUsers();
 
     User findUserById(long id);
 
-
+    List<User> getAllUsers();
 
 
 

@@ -14,16 +14,16 @@ public interface TicketService {
 
     Ticket findById(long id);
 
-    public Ticket changeStatus(long id, TicketStatus status);
+    Ticket changeStatus(long id, TicketStatus status);
 
-    public Comment addComment(long ticketId,
+    Comment addComment(long ticketId,
                               String text,
                               User author);
-    public List<Comment> getComments(long ticketId);
+    List<Comment> getComments(long ticketId);
 
-    public List<Ticket> findTicketsByPerson(long userId);
+    List<Ticket> findTicketsByAuthor(long userId);
 
-    public void setAssignee(long ticketId, User user);
+    boolean setAssignee(long ticketId, User user);
 
-    public boolean removeAssignee(long ticketId);
+    boolean removeAssignee(long ticketId);
 }

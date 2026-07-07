@@ -211,7 +211,7 @@ public class ConsoleUi {
         long id = scanner.nextLong();
 
         List<Ticket> ticketsBufer =
-                ticketService.findTicketsByPerson(id);
+                ticketService.findTicketsByAuthor(id);
 
         for (Ticket ticket : ticketsBufer) {
             System.out.println(ticket);
